@@ -171,6 +171,7 @@
         overflow: hidden;
         transition: all 0.3s ease;
         height: 400px;
+        border-radius: 20px;
     }
     
     .ukm-card:hover .ukm-overlay {
@@ -197,7 +198,7 @@
     .swiper {
         width: 100%;
         height: 100%;
-        padding-bottom: 40px;
+        padding: 0 0 50px 0;
     }
     
     .swiper-slide {
@@ -205,26 +206,45 @@
         background-size: cover;
         width: 300px;
         height: 400px;
+        border-radius: 20px;
+        overflow: hidden;
     }
     
     .swiper-button-next,
     .swiper-button-prev {
         color: #005BAC;
         background: white;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
     
     .swiper-button-next:after,
     .swiper-button-prev:after {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
+    }
+    
+    .swiper-pagination-bullet {
+        width: 12px;
+        height: 12px;
+        background: #ccc;
+        opacity: 0.5;
+        transition: all 0.3s ease;
     }
     
     .swiper-pagination-bullet-active {
         background: #005BAC;
+        opacity: 1;
+        transform: scale(1.2);
     }
     
     .section-title {
@@ -242,6 +262,59 @@
         height: 4px;
         background: linear-gradient(to right, #005BAC, #00a2ed);
         border-radius: 2px;
+    }
+    
+    /* Carousel Container */
+    .carousel-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+    }
+    
+    .carousel-wrapper {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    
+    .carousel-item {
+        min-width: 300px;
+        margin-right: 20px;
+    }
+    
+    /* Custom Horizontal Scroll */
+    .horizontal-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        padding: 20px 0;
+        scrollbar-width: thin;
+        scrollbar-color: #005BAC #f1f1f1;
+    }
+    
+    .horizontal-scroll::-webkit-scrollbar {
+        height: 8px;
+    }
+    
+    .horizontal-scroll::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    .horizontal-scroll::-webkit-scrollbar-thumb {
+        background: #005BAC;
+        border-radius: 10px;
+    }
+    
+    .horizontal-scroll::-webkit-scrollbar-thumb:hover {
+        background: #004c99;
+    }
+    
+    .scroll-item {
+        display: inline-block;
+        width: 300px;
+        margin-right: 20px;
+        vertical-align: top;
+        white-space: normal;
     }
     
     /* Dark mode styles */
@@ -268,6 +341,20 @@
     
     body.dark-mode .bg-gray-50 {
         background-color: #2d3748;
+    }
+    
+    body.dark-mode .swiper-button-next,
+    body.dark-mode .swiper-button-prev {
+        background: #2d3748;
+        color: #63b3ed;
+    }
+    
+    body.dark-mode .horizontal-scroll::-webkit-scrollbar-track {
+        background: #2d3748;
+    }
+    
+    body.dark-mode .horizontal-scroll::-webkit-scrollbar-thumb {
+        background: #63b3ed;
     }
 </style>
 @endsection
@@ -381,82 +468,77 @@
             </p>
         </div>
 
-        <!-- Swiper -->
-        <div class="swiper ukmSwiper" data-aos="fade-up">
-            <div class="swiper-wrapper">
-                <!-- UKM Card 1 -->
-                <div class="swiper-slide">
-                    <div class="ukm-card rounded-2xl overflow-hidden shadow-lg card-hover h-full">
-                        <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                        <div class="ukm-overlay">
-                            <span class="inline-block px-3 py-1 bg-blue-500 rounded-full text-xs font-medium mb-3">Olahraga</span>
-                            <h3 class="text-xl font-bold mb-2">UKM Basket</h3>
-                            <p class="text-sm opacity-90 mb-4">
-                                Unit kegiatan mahasiswa yang berfokus pada pengembangan bakat dalam olahraga basket.
-                            </p>
-                            <div class="flex justify-between items-center">
-                                <a href="{{ route('ukm.show', 1) }}" class="text-white hover:text-blue-200 font-medium flex items-center">
-                                    Detail <i class="fas fa-arrow-right ml-2"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- UKM Card 2 -->
-                <div class="swiper-slide">
-                    <div class="ukm-card rounded-2xl overflow-hidden shadow-lg card-hover h-full">
-                        <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                        <div class="ukm-overlay">
-                            <span class="inline-block px-3 py-1 bg-purple-500 rounded-full text-xs font-medium mb-3">Seni</span>
-                            <h3 class="text-xl font-bold mb-2">UKM Paduan Suara</h3>
-                            <p class="text-sm opacity-90 mb-4">
-                                Wadah bagi mahasiswa yang memiliki minat dalam seni vokal dan paduan suara.
-                            </p>
-                            <a href="{{ route('ukm.show', 2) }}" class="inline-flex items-center text-white font-medium">
-                                Detail <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- UKM Card 3 -->
-                <div class="swiper-slide">
-                    <div class="ukm-card rounded-2xl overflow-hidden shadow-lg card-hover h-full">
-                        <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                        <div class="ukm-overlay">
-                            <span class="inline-block px-3 py-1 bg-green-500 rounded-full text-xs font-medium mb-3">ORMAWA</span>
-                            <h3 class="text-xl font-bold mb-2">BEM UDINUS</h3>
-                            <p class="text-sm opacity-90 mb-4">
-                                Badan Eksekutif Mahasiswa yang merupakan organisasi kemahasiswaan di tingkat universitas.
-                            </p>
-                            <a href="{{ route('ukm.show', 3) }}" class="inline-flex items-center text-white font-medium">
-                                Detail <i class="fas fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- UKM Card 4 -->
-                <div class="swiper-slide">
-                    <div class="ukm-card rounded-2xl overflow-hidden shadow-lg card-hover h-full">
-                        <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                        <div class="ukm-overlay">
-                            <span class="inline-block px-3 py-1 bg-red-500 rounded-full text-xs font-medium mb-3">Teknologi</span>
-                            <h3 class="text-xl font-bold mb-2">UKM Robotik</h3>
-                            <p class="text-sm opacity-90 mb-4">
-                                Unit kegiatan mahasiswa yang berfokus pada pengembangan teknologi robotika dan AI.
-                            </p>
-                            <a href="{{ route('ukm.show', 4) }}" class="inline-flex items-center text-white font-medium">
+        <!-- Horizontal Scroll Container -->
+        <div class="horizontal-scroll" data-aos="fade-up">
+            <!-- UKM Card 1 -->
+            <div class="scroll-item">
+                <div class="ukm-card rounded-2xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                    <div class="ukm-overlay">
+                        <span class="inline-block px-3 py-1 bg-blue-500 rounded-full text-xs font-medium mb-3">Olahraga</span>
+                        <h3 class="text-xl font-bold mb-2">UKM Basket</h3>
+                        <p class="text-sm opacity-90 mb-4">
+                            Unit kegiatan mahasiswa yang berfokus pada pengembangan bakat dalam olahraga basket.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <a href="{{ route('ukm.show', 1) }}" class="text-white hover:text-blue-200 font-medium flex items-center">
                                 Detail <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+
+            <!-- UKM Card 2 -->
+            <div class="scroll-item">
+                <div class="ukm-card rounded-2xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                    <div class="ukm-overlay">
+                        <span class="inline-block px-3 py-1 bg-purple-500 rounded-full text-xs font-medium mb-3">Seni</span>
+                        <h3 class="text-xl font-bold mb-2">UKM Paduan Suara</h3>
+                        <p class="text-sm opacity-90 mb-4">
+                            Wadah bagi mahasiswa yang memiliki minat dalam seni vokal dan paduan suara.
+                        </p>
+                        <a href="{{ route('ukm.show', 2) }}" class="inline-flex items-center text-white font-medium">
+                            Detail <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UKM Card 3 -->
+            <div class="scroll-item">
+                <div class="ukm-card rounded-2xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                    <div class="ukm-overlay">
+                        <span class="inline-block px-3 py-1 bg-green-500 rounded-full text-xs font-medium mb-3">ORMAWA</span>
+                        <h3 class="text-xl font-bold mb-2">BEM UDINUS</h3>
+                        <p class="text-sm opacity-90 mb-4">
+                            Badan Eksekutif Mahasiswa yang merupakan organisasi kemahasiswaan di tingkat universitas.
+                        </p>
+                        <a href="{{ route('ukm.show', 3) }}" class="inline-flex items-center text-white font-medium">
+                            Detail <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UKM Card 4 -->
+            <div class="scroll-item">
+                <div class="ukm-card rounded-2xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-64 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                    <div class="ukm-overlay">
+                        <span class="inline-block px-3 py-1 bg-red-500 rounded-full text-xs font-medium mb-3">Teknologi</span>
+                        <h3 class="text-xl font-bold mb-2">UKM Robotik</h3>
+                        <p class="text-sm opacity-90 mb-4">
+                            Unit kegiatan mahasiswa yang berfokus pada pengembangan teknologi robotika dan AI.
+                        </p>
+                        <a href="{{ route('ukm.show', 4) }}" class="inline-flex items-center text-white font-medium">
+                            Detail <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="mt-12 text-center" data-aos="fade-up">
@@ -477,104 +559,99 @@
             </p>
         </div>
 
-        <!-- Swiper -->
-        <div class="swiper articleSwiper" data-aos="fade-up">
-            <div class="swiper-wrapper">
-                <!-- Article Card 1 -->
-                <div class="swiper-slide">
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover h-full flex flex-col">
-                        <div class="h-48 bg-cover bg-center relative flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
-                            <div class="absolute top-4 left-4">
-                                <span class="inline-block px-3 py-1 bg-yellow-500 text-white rounded-full text-xs font-medium">Berita Kampus</span>
-                            </div>
-                        </div>
-                        <div class="p-6 flex-grow flex flex-col">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">UDINUS Raih Peringkat Terbaik dalam Pemeringkatan Kampus</h3>
-                            <p class="text-gray-600 mb-4 flex-grow">
-                                Universitas Dian Nuswantoro kembali meraih prestasi membanggakan dalam pemeringkatan kampus terbaik di Indonesia...
-                            </p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-sm text-gray-500">3 hari yang lalu</span>
-                                <a href="{{ route('articles.show', 1) }}" class="text-udinus-blue hover:text-blue-700 font-medium flex items-center">
-                                    Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
-                                </a>
-                            </div>
+        <!-- Horizontal Scroll Container -->
+        <div class="horizontal-scroll" data-aos="fade-up">
+            <!-- Article Card 1 -->
+            <div class="scroll-item">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover h-full flex flex-col">
+                    <div class="h-48 bg-cover bg-center relative flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-yellow-500 text-white rounded-full text-xs font-medium">Berita Kampus</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Article Card 2 -->
-                <div class="swiper-slide">
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover h-full flex flex-col">
-                        <div class="h-48 bg-cover bg-center relative flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
-                            <div class="absolute top-4 left-4">
-                                <span class="inline-block px-3 py-1 bg-green-500 text-white rounded-full text-xs font-medium">Kegiatan Mahasiswa</span>
-                            </div>
-                        </div>
-                        <div class="p-6 flex-grow flex flex-col">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Festival Kreativitas Mahasiswa UDINUS 2023 Sukses Digelar</h3>
-                            <p class="text-gray-600 mb-4 flex-grow">
-                                Festival Kreativitas Mahasiswa (FKM) UDINUS tahun 2023 berhasil digelar dengan meriah dan diikuti oleh ratusan mahasiswa...
-                            </p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-sm text-gray-500">1 minggu yang lalu</span>
-                                <a href="{{ route('articles.show', 2) }}" class="text-udinus-blue hover:text-blue-700 font-medium flex items-center">
-                                    Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Article Card 3 -->
-                <div class="swiper-slide">
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover h-full flex flex-col">
-                        <div class="h-48 bg-cover bg-center relative flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
-                            <div class="absolute top-4 left-4">
-                                <span class="inline-block px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-medium">Wartadinus</span>
-                            </div>
-                        </div>
-                        <div class="p-6 flex-grow flex flex-col">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Tips Menjalani Perkuliahan Online dengan Efektif</h3>
-                            <p class="text-gray-600 mb-4 flex-grow">
-                                Di era digital seperti sekarang, perkuliahan online menjadi bagian yang tidak terpisahkan dari kehidupan mahasiswa...
-                            </p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-sm text-gray-500">2 minggu yang lalu</span>
-                                <a href="{{ route('articles.show', 3) }}" class="text-udinus-blue hover:text-blue-700 font-medium flex items-center">
-                                    Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Article Card 4 -->
-                <div class="swiper-slide">
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover h-full flex flex-col">
-                        <div class="h-48 bg-cover bg-center relative flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
-                            <div class="absolute top-4 left-4">
-                                <span class="inline-block px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-medium">Prestasi</span>
-                            </div>
-                        </div>
-                        <div class="p-6 flex-grow flex flex-col">
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Tim Robotik UDINUS Juara Nasional</h3>
-                            <p class="text-gray-600 mb-4 flex-grow">
-                                Tim Robotik UDINUS berhasil meraih juara pertama dalam kompetisi robotik tingkat nasional yang diikuti oleh 50 perguruan tinggi...
-                            </p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-sm text-gray-500">3 minggu yang lalu</span>
-                                <a href="{{ route('articles.show', 4) }}" class="text-udinus-blue hover:text-blue-700 font-medium flex items-center">
-                                    Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
-                                </a>
-                            </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">UDINUS Raih Peringkat Terbaik dalam Pemeringkatan Kampus</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">
+                            Universitas Dian Nuswantoro kembali meraih prestasi membanggakan dalam pemeringkatan kampus terbaik di Indonesia...
+                        </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-sm text-gray-500">3 hari yang lalu</span>
+                            <a href="{{ route('articles.show', 1) }}" class="text-udinus-blue hover:text-blue-700 font-medium flex items-center">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+
+            <!-- Article Card 2 -->
+            <div class="scroll-item">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover h-full flex flex-col">
+                    <div class="h-48 bg-cover bg-center relative flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-green-500 text-white rounded-full text-xs font-medium">Kegiatan Mahasiswa</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Festival Kreativitas Mahasiswa UDINUS 2023 Sukses Digelar</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">
+                            Festival Kreativitas Mahasiswa (FKM) UDINUS tahun 2023 berhasil digelar dengan meriah dan diikuti oleh ratusan mahasiswa...
+                        </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-sm text-gray-500">1 minggu yang lalu</span>
+                            <a href="{{ route('articles.show', 2) }}" class="text-udinus-blue hover:text-blue-700 font-medium flex items-center">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article Card 3 -->
+            <div class="scroll-item">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover h-full flex flex-col">
+                    <div class="h-48 bg-cover bg-center relative flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-medium">Wartadinus</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Tips Menjalani Perkuliahan Online dengan Efektif</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">
+                            Di era digital seperti sekarang, perkuliahan online menjadi bagian yang tidak terpisahkan dari kehidupan mahasiswa...
+                        </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-sm text-gray-500">2 minggu yang lalu</span>
+                            <a href="{{ route('articles.show', 3) }}" class="text-udinus-blue hover:text-blue-700 font-medium flex items-center">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article Card 4 -->
+            <div class="scroll-item">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover h-full flex flex-col">
+                    <div class="h-48 bg-cover bg-center relative flex-shrink-0" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-medium">Prestasi</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Tim Robotik UDINUS Juara Nasional</h3>
+                        <p class="text-gray-600 mb-4 flex-grow">
+                            Tim Robotik UDINUS berhasil meraih juara pertama dalam kompetisi robotik tingkat nasional yang diikuti oleh 50 perguruan tinggi...
+                        </p>
+                        <div class="flex justify-between items-center mt-auto">
+                            <span class="text-sm text-gray-500">3 minggu yang lalu</span>
+                            <a href="{{ route('articles.show', 4) }}" class="text-udinus-blue hover:text-blue-700 font-medium flex items-center">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="mt-12 text-center" data-aos="fade-up">
@@ -712,70 +789,45 @@
         observer.observe(statsSection);
     }
     
-    // Initialize Swiper for UKM
-    const ukmSwiper = new Swiper('.ukmSwiper', {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.ukmSwiper .swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.ukmSwiper .swiper-button-next',
-            prevEl: '.ukmSwiper .swiper-button-prev',
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-            },
-            768: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-            },
-            1024: {
-                slidesPerView: 4,
-                spaceBetween: 30,
-            },
-        },
-    });
-    
-    // Initialize Swiper for Articles
-    const articleSwiper = new Swiper('.articleSwiper', {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.articleSwiper .swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.articleSwiper .swiper-button-next',
-            prevEl: '.articleSwiper .swiper-button-prev',
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-            },
-            768: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-            },
-            1024: {
-                slidesPerView: 4,
-                spaceBetween: 30,
-            },
-        },
+    // Horizontal scroll enhancement
+    document.querySelectorAll('.horizontal-scroll').forEach(container => {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        container.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+        
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+        
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 2;
+            container.scrollLeft = scrollLeft - walk;
+        });
+        
+        // Smooth scroll for arrow keys
+        container.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                container.scrollBy({ left: -300, behavior: 'smooth' });
+            } else if (e.key === 'ArrowRight') {
+                container.scrollBy({ left: 300, behavior: 'smooth' });
+            }
+        });
+        
+        // Make container focusable for keyboard navigation
+        container.setAttribute('tabindex', '0');
     });
     
     // Dark Mode Toggle
